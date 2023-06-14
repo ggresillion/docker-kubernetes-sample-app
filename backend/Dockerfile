@@ -2,7 +2,7 @@ FROM golang:alpine as builder
 
 WORKDIR /app
 
-COPY go.* .
+COPY go.* /app/
 
 RUN go mod download
 
@@ -10,7 +10,7 @@ COPY . .
 
 RUN go build -ldflags "-w" -o sample-app .
 
-FROM scratch
+FROM alpine
 
 WORKDIR /app
 

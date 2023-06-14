@@ -16,6 +16,7 @@ var (
 	DB_PASSWORD = os.Getenv("POSTGRES_PASSWORD")
 	DB_NAME     = os.Getenv("POSTGRES_DATABASE")
 	DB_HOST     = os.Getenv("POSTGRES_HOST")
+	HOSTNAME    = os.Getenv("HOSTNAME")
 )
 
 type Root struct {
@@ -24,7 +25,7 @@ type Root struct {
 
 func getRoot(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	json, err := json.Marshal(&Root{"Hello world!"})
+	json, err := json.Marshal(&Root{fmt.Sprintf("Hello world from %s!", HOSTNAME)})
 	if err != nil {
 		log.Fatal(err)
 	}
