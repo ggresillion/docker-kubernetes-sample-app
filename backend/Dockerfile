@@ -8,9 +8,9 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o sample-app .
+RUN go build -ldflags "-w" -o sample-app .
 
-FROM alpine
+FROM scratch
 
 WORKDIR /app
 
@@ -18,4 +18,4 @@ COPY --from=builder /app/sample-app .
 
 EXPOSE 8080
 
-CMD /app/sample-app
+CMD ["/app/sample-app"]

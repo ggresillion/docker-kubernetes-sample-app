@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY package.json pnpm-lock.yaml /app/
 
-RUN pnpm ci
+RUN pnpm i
 
 COPY . .
 
@@ -20,4 +20,4 @@ COPY --from=builder /app/build /app/package.json /app/
 
 EXPOSE 3000
 
-CMD node /app
+CMD ["node", "/app"]

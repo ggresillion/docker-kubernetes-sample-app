@@ -2,21 +2,28 @@ services:
   backend:
     build: backend
     labels:
+      - traefik.enable=true
       - traefik.http.routers.backend.rule=PathPrefix(`/api`)
     environment:
       POSTGRES_PASSWORD: sample
       POSTGRES_USER: sample
       POSTGRES_DATABASE: sample
       POSTGRES_HOST: database
+    depends_on:
+      - database
   frontend:
     build: frontend
     labels:
+      - traefik.enable=true
       - traefik.http.routers.frontend.rule=PathPrefix(`/`)
+    depends_on:
+      - backend
   proxy:
     image: traefik
     command:
       - --api.insecure=true
       - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
